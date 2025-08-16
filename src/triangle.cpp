@@ -1,6 +1,8 @@
 #include "triangle.h"
 
 #include <vector>
+#include <chrono>
+#include <iostream>
 
 #include "geometry.h"
 #include "line.h"
@@ -30,6 +32,7 @@ void Triangle::draw(TGAImage &image, const TGAColor &color)
     int xmax = std::max(_p0.x, std::max(_p1.x, _p2.x));
     int ymin = std::min(_p0.y, std::min(_p1.y, _p2.y));
     int ymax = std::max(_p0.y, std::max(_p1.y, _p2.y));
+    #pragma omp parallel for
     for (int i = xmin; i <= xmax; i++)
     {
         for (int j = ymin; j <= ymax; j++)
