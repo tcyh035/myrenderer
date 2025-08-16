@@ -6,7 +6,7 @@
 class Shape
 {
 public:
-    virtual void draw(TGAImage &, TGAColor) = 0;
+    virtual void draw(TGAImage&, const TGAColor&) = 0;
     virtual ~Shape() = default;
 };
 
