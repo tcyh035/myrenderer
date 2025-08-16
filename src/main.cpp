@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     TGAImage image(width, height, TGAImage::RGB);
     Point p0(400, 200);
     Point p1(200, 600);
-    Point p2(600, 600);
+    Point p2(500, 700);
     Triangle t(p0, p1, p2);
     t.draw(image, red);
 
