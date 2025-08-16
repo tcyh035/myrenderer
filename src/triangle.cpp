@@ -1,6 +1,7 @@
 #include "triangle.h"
 #include "line.h"
 
+// line_scan
 void Triangle::draw(TGAImage &image, const TGAColor &color)
 {
     // sort
