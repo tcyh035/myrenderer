@@ -7,7 +7,9 @@
 class Triangle : public Shape
 {
 public:
-    void draw(TGAImage&, const TGAColor&) override;
+    void barycentric(Point p, float &u, float &v);
+    bool inside(Point p);
+    void draw(TGAImage &, const TGAColor &) override;
     Triangle(const Point& p0, const Point& p1, const Point& p2) 
         : _p0(p0), _p1(p1), _p2(p2) {}
     Triangle(int x0, int y0, int x1, int y1, int x2, int y2) 

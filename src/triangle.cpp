@@ -1,58 +1,43 @@
 #include "triangle.h"
+
+#include <vector>
+
+#include "geometry.h"
 #include "line.h"
 
-// line_scan
+void Triangle::barycentric(Point p, float& u, float&v)
+{
+    Vec3f a = Vec3f(_p2.x - _p0.x, _p1.x - _p0.x, _p0.x - p.x) ^ Vec3f(_p2.y - _p0.y, _p1.y - _p0.y, _p0.y - p.y);
+    if (std::abs(a.z) < 1) {
+        u = 1;
+        v = 1;
+        return;
+    }
+    u = a.y / a.z;
+    v = a.x / a.z;
+}
+
+bool Triangle::inside(Point p)
+{
+    float u, v;
+    barycentric(p, u, v);
+    return (u >= 0) && (v >= 0) && (1-v-u >= 0);
+}
+
 void Triangle::draw(TGAImage &image, const TGAColor &color)
 {
-    // sort
-    if (_p0.y > _p1.y)
+    int xmin = std::min(_p0.x, std::min(_p1.x, _p2.x));
+    int xmax = std::max(_p0.x, std::max(_p1.x, _p2.x));
+    int ymin = std::min(_p0.y, std::min(_p1.y, _p2.y));
+    int ymax = std::max(_p0.y, std::max(_p1.y, _p2.y));
+    for (int i = xmin; i <= xmax; i++)
     {
-        std::swap(_p0, _p1);
-    }
-    if (_p0.y > _p2.y)
-    {
-        std::swap(_p0, _p2);
-    }
-
-    // rasterize left and right edges
-    if (_p1.x > _p2.x)
-    {
-        std::swap(_p1, _p2);
-    }
-
-    Line l1(_p0, _p1);
-    Line l2(_p0, _p2);
-    l1.draw(image, color);
-    l2.draw(image, color);
-
-    // rasterize lines
-    if (_p1.y > _p2.y)
-    {
-        std::swap(_p1, _p2);
-    }
-
-    auto a1 = (_p1.y - _p0.y) / (float)(_p1.x - _p0.x);
-    auto b1 = _p0.y - a1 * _p0.x;
-    auto a2 = (_p2.y - _p0.y) / (float)(_p2.x - _p0.x);
-    auto b2 = _p0.y - a2 * _p0.x;
-    int maxy = _p2.y;
-
-    for (int i = _p0.y; i <= _p1.y; i++)
-    {
-        int x1 = (i - b1) / a1;
-        int x2 = (i - b2) / a2;
-        Line l(x1, i, x2, i);
-        l.draw(image, color);
-    }
-
-    auto a3 = (_p2.y - _p1.y) / (float)(_p2.x - _p1.x);
-    auto b3 = _p1.y - a3 * _p1.x;
-
-    for (int i = _p1.y + 1; i <= maxy; i++)
-    {
-        int x2 = (i - b2) / a2;
-        int x3 = (i - b3) / a3;
-        Line l(x2, i, x3, i);
-        l.draw(image, color);
+        for (int j = ymin; j <= ymax; j++)
+        {
+            if (inside(Point(i, j)))
+            {
+                image.set(i, j, color);
+            }
+        }
     }
 }
