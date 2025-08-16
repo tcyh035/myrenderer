@@ -1,5 +1,5 @@
-#ifndef _LINE_H_
-#define _LINE_H_
+#ifndef __LINE_H__
+#define __LINE_H__
 
 #include "point.h"
 #include "shape.h"

@@ -1,5 +1,5 @@
-#ifndef _SHAPE_H_
-#define _SHAPE_H_
+#ifndef __SHAPE_H__
+#define __SHAPE_H__
 
 #include "tgaimage.h"
 
