@@ -8,3 +8,6 @@ build/
 # Output
 *.tga
 
+# Visual Studio Code
+.vscode/
+
