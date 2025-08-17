@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     float* zbuffer = new float[width * height];
     for (int i = 0; i < width * height; i++)
     {
-        zbuffer[i] = FLT_MAX;
+        zbuffer[i] = -std::numeric_limits<float>::max();
     }
 
     TGAImage image(width, height, TGAImage::RGB);
@@ -41,16 +41,10 @@ int main(int argc, char** argv)
             screen_coords[j] = Vec3f(int((v.x+1.)*width/2.+.5), int((v.y+1.)*height/2.+.5), v.z);
         }
 
-        Vec3f n = (world_coords[2]-world_coords[0])^(world_coords[1]-world_coords[0]);
-        n.normalize();
-        float intensity = n*light_dir;
-        if (intensity > 0)
-        {
-            Triangle t(Point(screen_coords[0].x, screen_coords[0].y, screen_coords[0].z),
-                       Point(screen_coords[1].x, screen_coords[1].y, screen_coords[1].z),
-                       Point(screen_coords[2].x, screen_coords[2].y, screen_coords[2].z));
-            t.draw(image, TGAColor(intensity*255, intensity*255, intensity*255, 255), zbuffer);
-        }
+        Triangle t(Point(screen_coords[0].x, screen_coords[0].y, screen_coords[0].z),
+                    Point(screen_coords[1].x, screen_coords[1].y, screen_coords[1].z),
+                    Point(screen_coords[2].x, screen_coords[2].y, screen_coords[2].z));
+        t.draw(image, randomColor(), zbuffer);
     }
 
     image.flip_vertically();
