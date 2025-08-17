@@ -3,9 +3,10 @@
 
 struct Point
 {
-    int x;
-    int y;
-    constexpr Point(int x0 = 0, int y0 = 0) : x(x0), y(y0) {}
+    float x;
+    float y;
+    float z;
+    constexpr Point(float x0 = 0.0f, float y0 = 0.0f, float z0 = 0.0f) : x(x0), y(y0), z(z0) {}
 };
 
 #endif

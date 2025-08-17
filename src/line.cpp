@@ -1,6 +1,6 @@
 #include "line.h"
 
-void Line::draw(TGAImage &image, const TGAColor &color)
+void Line::draw(TGAImage &image, const TGAColor &color, float* zbuffer)
 {
     int x0 = _p0.x;
     int y0 = _p0.y;
