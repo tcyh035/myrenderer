@@ -28,9 +28,17 @@ Model::Model(const char *filename) : verts_(), faces_() {
                 f.push_back(idx);
             }
             faces_.push_back(f);
+        } else if (!line.compare(0, 3, "vt ")) {
+            iss >> trash;
+            Vec2i vt;
+            for (int i = 0; i < 2; i++) {
+                iss >> vt[i];
+            }
+            tex_coords_.push_back(vt);
         }
     }
-    std::cerr << "# v# " << verts_.size() << " f# "  << faces_.size() << std::endl;
+    std::cerr << "# v# " << verts_.size() << " f# "  << faces_.size() << " vt #"
+     << tex_coords_.size() << std::endl;
 }
 
 Model::~Model() {
